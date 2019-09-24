@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap-theme.min.css" />
+
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<br>
+<br>
+<br>
+	<div class="container">
+		<h2 align="center">Git Time-Line Commits Graph</h2>
+
+		<div id="container"
+			style="width: 550px; height: 400px; margin: 0 auto"></div>
+	</div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script th:inline="javascript">
+    $(function(){
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Based On latest 100 Commits by developers'
+        },
+        subtitle: {
+            text: 'All Details is for 100 Results only'
+        },
+        xAxis: {
+            categories: [[${commiterCounting.keySet()}]],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            max:100,
+            title: {
+                text: 'Commits  Count over timeline '
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Timeline/Date',
+            data: [[${commiterCounting.values()}]]
+        }]
+    });
+    });
+</script>
+<nav class="navbar navbar-expand-md navbar-white bg-dark fixed-bottom">
+   <div th:insert="~{fragments/footer :: copy}"></div>
+</nav>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Git Hub Repos using API</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+ <div th:replace="fragments/header :: header"></div>
+
+
+<main role="main" class="container">
+
+  <form th:object="${item}" method="post" action="/search" modelAttribute="item">
+   <div>
+       <label for="name">Repository name: </label>
+       <input type="text" name="name" th:field="*{name}">
+       <input type="submit" value="Search">
+   </div>
+
+<p th:if="${items}">
+	Results : [<span th:text="${#lists.size(items)}">0</span>]
+</p>
+<table  th:if="${items}" id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  <thead>
+   		<tr>
+					<th class="th-sm" >Name</th>
+					<th class="th-sm">Language</th>
+					<th class="th-sm">Star Count</th>
+					<th class="th-sm">License</th>
+					<th class="th-sm">Last Updated</th>
+					<th class="th-sm"></th>
+					<th class="th-sm"></th>
+					<th class="th-sm"></th>
+					
+		</tr>
+  </thead>
+  <tbody>
+    <tr th:each="item : ${items}">
+      <td >
+      	<a th:href="@{${item.html_url}}" th:text="${item.name}"></a><br>
+        <span th:text="${item.full_name}"> </span><br>
+        <span th:text="${item.description}"> </span>
+      </td>
+      <td th:text="${item.language}"></td>
+      <td th:text="${item.stargazers_count}"></td>
+      <td th:text="${item.license}"></td>
+      <td th:text="${#dates.format(item.updated_at, 'dd-MM-yyyy HH:mm')}" ></td>
+      <td ><a th:href="@{${item.developer_commits}}" >Developers' Commits</a></td>
+      <td ><a th:href="@{${item.timeline_commits}}" >Time-line Commits</a></td>
+       <td ><a th:href="@{${item.commits_details}}" >Commits Details</a></td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+		<th>Name</th>
+		<th>Language</th>
+		<th>Star Count</th>
+		<th>License</th>
+		<th>Last Updated</th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+  </tfoot>
+</table>
+ </form>
+</main>
+<!-- /.container -->
+
+<nav class="navbar navbar-expand-md navbar-white bg-dark fixed-bottom">
+   <div th:insert="~{fragments/footer :: copy}"></div>
+</nav>
+
+<script th:inline="javascript">
+$(document).ready(function () {
+	alert('its ok');
+	  $('#dtBasicExample').DataTable();
+	  $('.dataTables_length').addClass('bs-select');
+	  
+	  $('#dtBasicExample').DataTable({ "paging": true, "pagingType": "simple"  });
+      $('.dataTables_length').addClass('bs-select');
+	});
+</script>
+
+<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}" ></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</body>
+</html>
