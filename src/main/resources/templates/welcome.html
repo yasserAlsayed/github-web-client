@@ -17,7 +17,7 @@
 
 <main role="main" class="container">
 
-  <form th:object="${item}" method="post" action="/search" modelAttribute="item">
+  <form th:object="${item}" method="post" action="/search" modelAttribute="item" id="search">
    <div>
        <label for="name">Repository name: </label>
        <input type="text" name="name" th:field="*{name}">
@@ -46,7 +46,7 @@
       <td >
       	<a th:href="@{${item.html_url}}" th:text="${item.name}"></a><br>
         <span th:text="${item.full_name}"> </span><br>
-        <span th:text="${item.description}"> </span>
+       <!--  <span  th:text="${item.description}"> </span> -->
       </td>
       <td th:text="${item.language}"></td>
       <td th:text="${item.stargazers_count}"></td>

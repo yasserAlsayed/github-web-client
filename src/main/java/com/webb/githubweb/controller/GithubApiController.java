@@ -10,7 +10,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -53,7 +52,6 @@ public class GithubApiController {
 	    RestTemplate restTemplate = new RestTemplate();
 		// Send request with GET method, and Headers.
 		ResponseEntity<RepoResult> response =restTemplate.exchange(url ,HttpMethod.GET, entity, RepoResult.class);
-        HttpStatus statusCode = response.getStatusCode();
         model.addAttribute("items", response.getBody().getItems());
         model.addAttribute("item", new Repo());
     	return "/welcome"; //view
