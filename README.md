@@ -9,7 +9,7 @@
 
 #3-> mvn spring-boot:run
 
-#4-> http://localhst:8080
+#4-> http://localhost:8080
 
  
 
@@ -23,7 +23,7 @@ Or
 
 #4-> java -jar target/github-web-client.jar
 
-#5-> http://localhst:8080
+#5-> http://localhost:8080
 
 
 
