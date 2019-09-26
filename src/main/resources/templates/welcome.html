@@ -68,6 +68,7 @@
 					<th class="th-sm"></th>
 					<th class="th-sm"></th>
 					<th class="th-sm"></th>
+					<th class="th-sm"></th>
 					
 		</tr>
   </thead>
@@ -85,6 +86,7 @@
       <td ><a th:href="@{${item.developer_commits}}" >Developers' Commits</a></td>
       <td ><a th:href="@{${item.timeline_commits}}" >Time-line Commits</a></td>
        <td ><a th:href="@{${item.commits_details}}" >Commits Details</a></td>
+       <td ><a th:href="@{${item.committers_link}}" >Committers</a></td>
     </tr>
   </tbody>
   
@@ -108,10 +110,10 @@
  
 </div>
 <!-- /.container -->
-
+<!-- 
 <nav class="navbar navbar-expand-md navbar-white bg-dark fixed-bottom">
    <div th:insert="~{fragments/footer :: copy}"></div>
-</nav>
+</nav> -->
 
 <script th:inline="javascript">
 $(document).ready(function () {

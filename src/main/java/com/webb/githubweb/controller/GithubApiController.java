@@ -3,6 +3,9 @@ package com.webb.githubweb.controller;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +32,6 @@ import com.webb.githubweb.model.RepoResult;
 public class GithubApiController {
 	static final String URL_GITHUB_SERACH = "https://api.github.com/search/repositories?q=";
 	static final String URL_GITHUB_COMMITS = "https://api.github.com/repos/";
-	  //"repository_search_url": "https://api.github.com/search/repositories?q={query}{&page,per_page,sort,order}",
 	
 	// inject via application.properties
     @Value("${welcome.message}")
@@ -77,6 +79,25 @@ public class GithubApiController {
     		    	return "developerCommit";
     		    }
     	 return "developer".equals(chart)?"barGraph":"barGraph_timeLine"; 
+   }
+    
+    public static <T> Predicate<T> distinctByKey(
+    	    Function<? super T, ?> keyExtractor) {
+    	   
+    	    Map<Object, Boolean> seen = new ConcurrentHashMap<>(); 
+    	    return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null; 
+    	}
+    
+    @RequestMapping(value = "/users", method = RequestMethod.GET )
+    public String listUsers(@RequestParam(name ="full_name", required = true, defaultValue = "")  String full_name,Model model) {
+    	 	String url=URL_GITHUB_COMMITS+full_name+"/commits";
+		    RestTemplate restTemplate = new RestTemplate();
+		    ResponseEntity<List<CommitResult>> response = restTemplate.exchange(
+		     url,HttpMethod.GET,null,new ParameterizedTypeReference<List<CommitResult>>(){});
+		    List<CommitResult> commits = response.getBody();
+		    List<CommitResult> result= commits.stream().filter(distinctByKey(p -> p.getAuthorName())).collect(Collectors.toList());
+		    model.addAttribute("items",result);
+		    return "developers"; 
    }
 
 

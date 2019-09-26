@@ -20,7 +20,7 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-		<h2 align="center">Developer Commits Details</h2>
+		<h2 align="center">Developers/Committers </h2>
 
 	
 <main role="main" class="container">
@@ -30,21 +30,14 @@ Resuts : [<span th:text="${#lists.size(items)}">0</span>]
 <table  th:if="${items}" id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
   <thead>
    		<tr>
-					<th class="th-sm">Message</th>
-					<th class="th-sm">Author Name</th>
+					<th class="th-sm">userName</th>
 					<th class="th-sm">Author Email</th>
-					<th class="th-sm">Date</th>
-					
 		</tr>
   </thead>
   <tbody>
     <tr th:each="item : ${items}">
-      <td >
-      	<a th:href="@{${item.html_url}}" th:text="${item.message}"></a>
-      </td>
       <td th:text="${item.authorName}"></td>
       <td th:text="${item.authorEmail}"></td>
-      <td th:text="${#dates.format(item.commitDate, 'dd-MM-yyyy HH:mm')}" ></td>
     </tr>
   </tbody>
 </table>

@@ -11,6 +11,7 @@ public class Author implements Serializable {
 	private String name;
 	private String email;
 	private Date date;
+	private String login;
 	
 	public String getName() {
 		return name;
@@ -29,5 +30,11 @@ public class Author implements Serializable {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
 	}
 }

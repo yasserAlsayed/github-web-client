@@ -22,6 +22,8 @@ public class Repo implements Serializable {
 	
 	private String commits_details;
 	
+	private String committers_link;
+	
 	public String getDeveloper_commits() {
 		developer_commits=CommitLinks.DEVELOPER_COMMITS+full_name;
 		return developer_commits;
@@ -96,6 +98,13 @@ public class Repo implements Serializable {
 	}
 	public void setCommits_details(String commits_details) {
 		this.commits_details = commits_details;
+	}
+	public String getCommitters_link() {
+		committers_link=CommitLinks.COMMITERS_LINK+full_name;
+		return committers_link;
+	}
+	public void setCommitters_link(String committers_link) {
+		this.committers_link = committers_link;
 	}
 
 }
