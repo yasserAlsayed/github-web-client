@@ -44,16 +44,16 @@ public class GithubApiController {
     }
 
 
-    @RequestMapping(value = "/search", method = RequestMethod.POST,
+    @RequestMapping(value = "/search", method = RequestMethod.GET,
      produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE}) 
-    public String searchRepository(Repo item,Model model) {
-	    String url=URL_GITHUB_SERACH+item.getName()+"&per_page=100";
+    public String searchRepository(@RequestParam(name ="name", required = true, defaultValue = "")  String name,Repo item,Model model) {
+	    String url=URL_GITHUB_SERACH+name+"&per_page=100";
 	    HttpEntity<CommitResult[]> entity = new HttpEntity<>(getHeaders());
 	    RestTemplate restTemplate = new RestTemplate();
 		// Send request with GET method, and Headers.
 		ResponseEntity<RepoResult> response =restTemplate.exchange(url ,HttpMethod.GET, entity, RepoResult.class);
         model.addAttribute("items", response.getBody().getItems());
-        model.addAttribute("item", new Repo());
+        model.addAttribute("total_count", response.getBody().getTotal_count());
     	return "/welcome"; //view
     }
 
